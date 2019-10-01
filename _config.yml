@@ -30,7 +30,8 @@ twitter_username: jekyllrb
 github_username:  RuxuePeng
 
 # Build settings
-theme: minima
+# theme: minima
+remote_theme: thiagorossener/jekflix-template
 plugins:
   - jekyll-feed
 
