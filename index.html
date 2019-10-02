@@ -48,11 +48,11 @@ layout: main
                         {% include new-post-tag.html date=post.date %}
                         <a href="{{ post.url | prepend: site.baseurl }}" {%if isnewpost %}class="new-post"{% endif %}>
                             {% if post.optimized_image %}
-                                <img src="/assets/img/placeholder.png" width="100%" data-url="{{ post.optimized_image | prepend: site.baseurl }}" class="preload">
+                                <img src="{{ site.baseurl }}/assets/img/placeholder.png" width="100%" data-url="{{ post.optimized_image | prepend: site.baseurl }}" class="preload">
                             {% elsif post.image %}
-                                <img src="/assets/img/placeholder.png" width="100%" data-url="{{ post.image | prepend: site.baseurl }}" class="preload">
+                                <img src="{{ site.baseurl }}/assets/img/placeholder.png" width="100%" data-url="{{ post.image | prepend: site.baseurl }}" class="preload">
                             {% else %}
-                                <img src="/assets/img/placeholder.png" width="100%" data-url="{{ site.baseurl }}/assets/img/off.jpg" class="preload">
+                                <img src="{{ site.baseurl }}/assets/img/placeholder.png" width="100%" data-url="{{ site.baseurl }}/assets/img/off.jpg" class="preload">
                             {% endif %}
                         </a>
                     </div>

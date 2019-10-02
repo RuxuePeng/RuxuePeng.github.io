@@ -18,10 +18,10 @@ let gulp        = require('gulp'),
 
 /**
  * Notify
- * 
+ *
  * Show a notification in the browser's corner.
- * 
- * @param {*} message 
+ *
+ * @param {*} message
  */
 function notify(message) {
   browserSync.notify(message);
@@ -29,7 +29,7 @@ function notify(message) {
 
 /**
  * Config Task
- * 
+ *
  * Build the main YAML config file.
  */
 function config() {
@@ -41,10 +41,10 @@ function config() {
 
 /**
  * Jekyll Task
- * 
+ *
  * Build the Jekyll Site.
- * 
- * @param {*} done 
+ *
+ * @param {*} done
  */
 function jekyll(done) {
   notify('Building Jekyll...');
@@ -55,10 +55,10 @@ function jekyll(done) {
 
 /**
  * Server Task
- * 
+ *
  * Launch server using BrowserSync.
- * 
- * @param {*} done 
+ *
+ * @param {*} done
  */
 function server(done) {
   browserSync({
@@ -71,10 +71,10 @@ function server(done) {
 
 /**
  * Reload Task
- * 
+ *
  * Reload page with BrowserSync.
- * 
- * @param {*} done 
+ *
+ * @param {*} done
  */
 function reload(done) {
   notify('Reloading...');
@@ -84,7 +84,7 @@ function reload(done) {
 
 /**
  * Theme Task
- * 
+ *
  * Create the JSON theme file.
  */
 function theme() {
@@ -95,7 +95,7 @@ function theme() {
 
 /**
  * Main CSS Task
- * 
+ *
  * The regular Stylus files are run through kouto-swiss/prefixer/jeet/rupture
  * and placed into one single main styles.min.css file (and sourcemap)
  */
@@ -117,7 +117,7 @@ function mainCss() {
 
 /**
  * Preview CSS Task
- * 
+ *
  * The preview Stylus file is run through kouto-swiss/prefixer/jeet/rupture
  * and placed into one single preview.min.css file (and sourcemap)
  */
@@ -139,14 +139,14 @@ function previewCss() {
 
 /**
  * CSS Task
- * 
+ *
  * Run all the CSS related tasks.
  */
 const css = gulp.parallel(mainCss, previewCss);
 
 /**
  * Main JS Task
- * 
+ *
  * All regular .js files are collected, minified and concatonated into one
  * single scripts.min.js file (and sourcemap)
  */
@@ -165,7 +165,7 @@ function mainJs() {
 
 /**
  * Preview JS Task
- * 
+ *
  * Copy preview JS files to the assets folder.
  */
 function previewJs() {
@@ -176,14 +176,14 @@ function previewJs() {
 
 /**
  * JavaScript Task
- * 
+ *
  * Run all the JS related tasks.
  */
 const js = gulp.parallel(mainJs, previewJs);
 
 /**
  * Images Task
- * 
+ *
  * All images are optimized and copied to assets folder.
  */
 function images() {
@@ -196,7 +196,7 @@ function images() {
 
 /**
  * Watch Task
- * 
+ *
  * Watch files to run proper tasks.
  */
 function watch() {
@@ -239,7 +239,7 @@ exports.default = gulp.series(gulp.parallel(js, gulp.series(theme, css), images)
 
 /**
  * Build Task
- * 
+ *
  * Running just `gulp build` will:
  * - Compile the theme, Stylus and JavaScript files
  * - Optimize and copy images to its folder
