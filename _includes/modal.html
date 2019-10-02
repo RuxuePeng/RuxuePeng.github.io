@@ -16,11 +16,11 @@
                         <a href="{{ post.url | prepend: site.baseurl }}">
                             <figure>
                                 {% if post.optimized_image %}
-                                    <img src="{{ post.optimized_image }}">
+                                    <img src="{{ post.optimized_image | prepend: site.baseurl }}">
                                 {% elsif post.image %}
-                                    <img src="{{ post.image }}">
+                                    <img src="{{ site.baseurl }}{{ post.image }}">
                                 {% else %}
-                                    <img src="/assets/img/off.png">
+                                    <img src="{{ site.baseurl }}/assets/img/off.png">
                                 {% endif %}
                             </figure>
                             <h3>{{ post.title }}</h3>

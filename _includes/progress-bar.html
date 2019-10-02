@@ -3,6 +3,6 @@
         {% for i in (1..paginator.total_pages) %}
             <div class="bar {% if i <= paginator.page %}completed{% endif %}"></div>
         {% endfor %}
-        <img class="star" src="/assets/img/star.svg">
+        <img class="star" src="{{ site.baseurl }}/assets/img/star.svg">
     </div>
 {% endif %}

@@ -6,7 +6,7 @@ permalink: /about/
 menu: true
 ---
 
-<img class="img-rounded" src="/assets/img/uploads/profile.png" alt="Flora Peng" width="200">
+<img class="img-rounded" src="{{ site.baseurl }}/assets/img/uploads/profile.png" alt="Flora Peng" width="200">
 
 # Hi There
 

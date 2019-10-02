@@ -4,7 +4,7 @@ layout: page
 
 <div class="staff">
   {% if page.photo %}
-    <img class="img-rounded" src="{{ page.photo }}" alt="{{ author.display_name }}">
+    <img class="img-rounded" src="{{ site.baseurl }}{{ page.photo }}" alt="{{ author.display_name }}">
   {% else %}
     <img class="img-rounded" src="/assets/img/user.jpg" alt="{{ author.display_name }}">
   {% endif %}
@@ -55,7 +55,7 @@ layout: page
     "@type": "Person",
     "name": "{{ page.display_name }}",
     {% if page.photo %}
-    "image": "{{ page.photo }}",
+    "image": "{{ page.photo | prepend: site.baseurl | prepend: site.url }}",
     {% else %}
     "image": {{ "/assets/img/user.jpg" | prepend: site.baseurl | prepend: site.url }},
     {% endif %}

@@ -18,7 +18,7 @@ layout: main
     {% if site.show_hero %}
         <!-- Hero -->
         {% assign featured = posts.first %}
-        <section class="hero" style="background-image: url({{ featured.image }})">
+        <section class="hero" style="background-image: url({{ site.baseurl }}{{ featured.image }})">
             <div class="pixels"></div>
             <div class="gradient"></div>
             <div class="content">
@@ -26,8 +26,8 @@ layout: main
                 <h1 class="title">{{ featured.title }}</h1>
                 <p class="description">{{ featured.subtitle }}</p>
                 <div class="buttons">
-                    <a href="{{ featured.url }}" role="button" class="button">
-                        <img src="/assets/img/icons/read.svg">
+                    <a href="{{ site.baseurl }}{{ featured.url }}" role="button" class="button">
+                        <img src="{{ site.baseurl }}/assets/img/icons/read.svg">
                         <span>Read Now</span>
                     </a>
                 </div>
@@ -48,11 +48,11 @@ layout: main
                         {% include new-post-tag.html date=post.date %}
                         <a href="{{ post.url | prepend: site.baseurl }}" {%if isnewpost %}class="new-post"{% endif %}>
                             {% if post.optimized_image %}
-                                <img src="/assets/img/placeholder.png" width="100%" data-url="{{ post.optimized_image }}" class="preload">
+                                <img src="/assets/img/placeholder.png" width="100%" data-url="{{ post.optimized_image | prepend: site.baseurl }}" class="preload">
                             {% elsif post.image %}
-                                <img src="/assets/img/placeholder.png" width="100%" data-url="{{ post.image }}" class="preload">
+                                <img src="/assets/img/placeholder.png" width="100%" data-url="{{ post.image | prepend: site.baseurl }}" class="preload">
                             {% else %}
-                                <img src="/assets/img/placeholder.png" width="100%" data-url="/assets/img/off.jpg" class="preload">
+                                <img src="/assets/img/placeholder.png" width="100%" data-url="{{ site.baseurl }}/assets/img/off.jpg" class="preload">
                             {% endif %}
                         </a>
                     </div>
@@ -137,7 +137,7 @@ layout: main
                 "name": "{{ post.title }}",
                 "headline": "{{ post.subtitle }}",
                 "description": "{{ post.description }}",
-                "image": "{{ post.image }}",
+                "image": "{{ site.baseurl }}{{ post.image }}",
                 "url": "{{ post.url | prepend: site.baseurl | prepend: site.url }}",
                 "inLanguage": "{{ site.language }}",
                 "dateCreated": "{{ post.date | date: '%Y-%m-%d/' }}",
