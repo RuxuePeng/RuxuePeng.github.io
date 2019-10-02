@@ -37,7 +37,7 @@ two_columns_layout: true
 
 
 # Advanced Settings
-baseurl: "/home" # the subpath of your site, e.g. /blog
+baseurl: "" # the subpath of your site, e.g. /blog
 url: "https://oneepochaway.com" # the base hostname & protocol for your site
 google_analytics: "UA-149153029-1"
 language: "en"
