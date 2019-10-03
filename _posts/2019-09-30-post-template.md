@@ -4,7 +4,7 @@ title:  "Post Template"
 subtitle: 测试一下中文
 date:   2019-09-30 23:48:17 -0700
 categories: NLP
-tags: Coreference-Resolution
+tags: Coreference-Resolution 中文 Chinese
 image: >-
   /assets/img/for_posts/thumbnail1.JPG
 optimized_image: >-
