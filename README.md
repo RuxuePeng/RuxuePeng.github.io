@@ -1,18 +1,7 @@
-[![Netlify Status](https://api.netlify.com/api/v1/badges/5f205b3a-73c2-472c-b052-82b95bdf36b7/deploy-status)](https://app.netlify.com/sites/sleepy-bhabha-00eedf/deploys)
+# The Theme
 
-# Jekflix Template
+This is modified from [Jekflix Template](https://github.com/thiagorossener/jekflix-template#v200)! See the [demo here](https://jekflix.rossener.com/).
 
-Version 2.0 is [here](https://github.com/thiagorossener/jekflix-template#v200)! 🎉🎊
-
-![Jekflix Template Cover Image](https://res.cloudinary.com/dm7h7e8xj/image/upload/v1505354182/jekflix-logo_mfngps.png)
-
-See the [demo here](https://jekflix.rossener.com/).
-
-## What is it?
-
-A template for Jekyll inspired by Netflix panel for who loves movies and series and would like to have a blog with this cool appearance.
-
-![Jekflix Screenshot Image](https://res.cloudinary.com/dm7h7e8xj/image/upload/v1566390829/jekflix-screenshot-2_zfiog2.jpg)
 
 ## Features
 
@@ -46,11 +35,6 @@ A template for Jekyll inspired by Netflix panel for who loves movies and series 
 - Sitemap.xml
 - Social Media ready
 
-## Setup
-
-- [Environment](https://github.com/thiagorossener/jekflix-template/wiki/setup#environment)
-- [Installing template](https://github.com/thiagorossener/jekflix-template/wiki/setup#installing-template)
-- [Running local](https://github.com/thiagorossener/jekflix-template/wiki/setup#running-local)
 
 ## Customization
 
