@@ -1,7 +1,7 @@
 ---
 layout: post
 title:  "Post Template"
-subtitle: This is a placeholder
+subtitle: 测试一下中文
 date:   2019-09-30 23:48:17 -0700
 categories: NLP
 tags: Coreference-Resolution
@@ -14,7 +14,7 @@ author: ruxuepeng
 paginate: true
 ---
 
-## Inline HTML elements
+## 中文的开头 Inline HTML elements
 
 HTML defines a long list of available inline tags, a complete list of which can be found on the [Mozilla Developer Network](https://developer.mozilla.org/en-US/docs/Web/HTML/Element).
 
