@@ -1,15 +1,12 @@
 ---
 layout: post
-title:  "模板Post Template"
+title:  "Discourse Coherence"
 subtitle: Placeholder
 date:   2019-09-30 23:48:17 -0700
 categories: NLP
-tags: 中文
-image: >-
-  /assets/img/for_posts/P0/thumbnail1.JPG
-optimized_image: >-
-  /assets/img/for_posts/P0/thumbnail1.JPG
-
+tags: 中文 slp笔记
+image:
+optimized_image:
 author: ruxuepeng
 paginate: true
 ---
