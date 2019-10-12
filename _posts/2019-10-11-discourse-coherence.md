@@ -60,7 +60,12 @@ e.g. Before winter I built a **chimney**, and shingled the sides of my **house**
 ---
 ### 如何解析语篇的连贯关系
 从第一个角度衡量一个文本的局部连贯度.
-### (1) Theory
+* [Theory](#理论)  
+* [Dataset](#数据集)  
+* [RST Parsing](#解析树)
+* [PDTB-style Parsing](#解析句子对)  
+
+### 理论
 常用的理论框架是修辞结构理论(Rhetorical Structure Theory/RST）.  
 RST分析的最小单位是一对句子或一对词组，句子/词组称为基础语篇单位(Elementary Discourse Unit/**EDU**)或者语篇段(discourse segment).
 
@@ -90,7 +95,7 @@ RST理论通过给一对对的EDU标注连贯关系，形成像这样解析全�
 要注意到这种语篇级别的RST树的标注是很昂贵的，像PDTB这样的数据集就不包含树，只包含句子级别的关系标注.  
 所以也有只解析句子级别连贯度的解析器，这里简称为PDTB解析好了.
 
-### (2) Dataset
+### 数据集
 * [Penn Discourse TreeBank/PDTB (最新2008)](https://catalog.ldc.upenn.edu/LDC2008T05)
 包含18000个明确关系(explicit relation)，16000个隐含关系(implicit relation)
 只包含每一对span的关系(span-pair relation)，不包含整个语篇级别的树.  
@@ -107,37 +112,116 @@ because, although, when, since, or as a result，然后这些关联词会与逻�
 考虑段落之间的关系, 有像RST树的语篇级别的标注.
 <img src="/assets/img/for_posts/P12/MCDTB.png" alt="MCDTB数据集"/>
 
-### (3) 如何解析出RST树  
+### 解析树
 为了要把语篇解析成RST树，需要两步：  
-第一步：**基础语篇单位切分（EDU segmentation）**  
-——把文本切成小块小块，或者叫语篇切分(discourse segmentation)
-
-第二步： **对EDU们做RST解析 (RST Parsing)**  
+第一步：[基础语篇单位切分（EDU segmentation)](#如何把文本切成小块)  
+——把文本切成小块小块，或者叫语篇切分(discourse segmentation)  
+第二步： [对EDU们做RST解析 (RST Parsing)](#如何做修辞结构解析)  
 ——从下往上合并EDU，自动生成一棵树
 
-a. 如何把文本切成小块?  —— 有监督学习序列标注模型  
+---
+#### 如何把文本切成小块  
 使用RST Discourse Treebank数据集，训练一个序列标注(sequential labelling)模型.被标注为1的位置表示从这里切断句子，分成前后两个EDU.  
 模型的设计就是典型序列标注任务的套路了: BiLSTM-CRF.  
+
 今天以一篇[EMNLP 2018的论文](https://www.aclweb.org/anthology/D18-1116.pdf
 )为例，看看常用的模型结构.
 <img src="/assets/img/for_posts/P12/EDU_segmentation_model.png" alt="序列标注模型做文本切分"/>
 从下往上看：  
-a. 拿到词嵌入向量  
+a1. 拿到词嵌入向量  
 先把词过ELMO，得到向量表示*r*<sub>1</sub>，再跟另外一个向量表示*e*<sub>1</sub>粘起来，得到输入（黄色与绿色）
 * why?
 由于RST的数据集很小，从零开始训练显然效果会差，于是用了预训练的ELMO.
 
-b. 得到词语上下文信息  
+a2. 得到词语上下文信息  
 过个BiLSTM，然后把每个time step得到的两个hidden state向量粘起来
 
-c. 允许模型重视上下文中的特定位置  
-在一个限定长度的窗口里面算注意力*a*<sub>n</sub>，也黏到bi-LSTM的输出上，输出*h*<sub>n</sub>
-<p><span class="math inline">\(\tilde{r_{1}}\)</span></p>
+a3. 允许模型重视上下文中的特定位置  
+在一个限定长度的窗口里面算注意力*a*<sub>n</sub>，也黏到bi-LSTM的输出上，输出
+<p><span class="math inline">\(\tilde{h_{n}}\)</span></p>
 
 
-c. 判断每个位置应不应该切开  
+a4. 判断  
 最后每个位置的标签由CRF模型决定，求的是序列走到这一步时所有可能标签的条件概率
 
+看到这里你肯定猜到了，没错又有人把词嵌入从ELMO换成了BERT然后刷了一下准确率...
+<img src="/assets/img/for_posts/P12/BERT_on_EDU_segmentation.png" alt="BERT做词嵌入"/>
+[论文传送门](https://www.aclweb.org/anthology/W19-2715.pdf)  
+最右边一列就是BERT，BERT在中文数据集上表现平平，在其他语言上BERT的表现很好.  
+论文原话：<cite>BERT contextual embeddings beats all other systems on all datasets – except the Chinese RST treebank –, often by a large margin.</cite>
+
+---
+#### 如何做修辞结构解析
+从1999年以来, RST解析都是用shift-reduce parsing模型框架, 之前的parser是靠一些设定的规则选择shift和reduce.   
+近几年出现神经网络风格的RST解析器：  
+先把每句话的句嵌入向量(sentence embedding)学出来，然后有监督地训练解析器选择正确的shift和reduce操作.
+
+* Shift-reduce Parser的基本设定  
+    * 需要一个队列Queue与一个栈Stack  
+    * shift动作: 把队列最前面的EDU的放进栈里面  
+    * reduce(l, d)动作: 把栈最上面的两个成员merge成一个成员
+        * l 指的是连贯关系的标签，d指的是卫星-核心的方向(nuclearity direction), d ∈ {NN,NS,SN}
+        * NN = 两个EDU都是核心（关系箭头是双向的/无向的）
+        * NS = 左边的EDU是核心 右边的EDU是卫星（关系箭头指向左边的EDU）
+        * SN = 左边的EDU是卫星 右边的EDU是核心（关系箭头指向右边的EDU）
+
+* 栗子  
+假设我们现在目标是把如下的RST树建起来：
+<img src="/assets/img/for_posts/P12/sample_RST_tree.png" alt="RST树"/>
+[图片来源](https://www.aclweb.org/anthology/C18-1047.pdf)   
+可以看到一共有4句话:  
+*e*<sub>1</sub>, *e*<sub>2</sub>, *e*<sub>3</sub>, *e*<sub>4</sub>,  
+两种连贯关系：attribution和elaboration  
+需要对队列里面的EDU做如下操作, bottom-up地把树建出来:  
+<img src="/assets/img/for_posts/P12/RST_parse.png" alt="RST解析"/>
+[图片来源](https://www.aclweb.org/anthology/C18-1047.pdf)  
+解析器每一步能做的就是从两个Action中选一个做：SH - shift或者RD - reduce  
+
+
+* 那么问题来了，模型怎么知道选哪个action?  
+以[这个论文](https://www.aclweb.org/anthology/C18-1047.pdf)为例, 看如何先得到句子向量表示，然后有监督地训练序列分类模型选择action.  
+    * 句子向量表示就建一个编码器(encoder):
+    * 假设你现在有一段文本，有词语 *w*<sub>1</sub>, *w*<sub>2</sub>, …, *w*<sub>t</sub>  
+    * 它先用常规操作得到每个词的向量表示（比如字母级别嵌入模型、词嵌入模型、好几个模型粘起来，etc）;  
+    * 过Bi-LSTM得到 *h*<sub>1</sub>, *h*<sub>2</sub>, …, *h*<sub>t</sub> ;  
+    * 过average pooling得到这段文本不同长度的表示*x*<sub>1</sub><sup>e</sup>, *x*<sub>2</sub><sup>e</sup>, …, *x*<sub>n</sub><sup>e</sup> ;  
+    * <p><span class="math inline">\(x^{e} = \frac{1}{t-s+1}\sum_{k=s}^{t} h_{k}^{w}\)</span></p>  
+    * 然后这些不同长度的表示*x*<sub>1</sub><sup>e</sup>, *x*<sub>2</sub><sup>e</sup>, …, *x*<sub>n</sub><sup>e</sup> 过第二层Bi-LSTM得到最终的这段文本的表示 *h*<sub>1</sub><sup>e</sup>, *h*<sub>2</sub><sup>e</sup>, …, *h*<sub>n</sub><sup>e</sup> .  
+
+    * 如何选择action:  
+    * 得到这个文本的一系列表示之后，分类器是一个简单的前馈神经网络  
+    网络的输入是栈最上面的三个成员 *s*<sub>0</sub>,*s*<sub>1</sub>,*s*<sub>2</sub>的表示向量 以及 队列下一个出来的成员的表示向量
+    * <p><span class="math inline">\(o = W(h_{s0}^{t},h_{s1}^{t},h_{s2}^{t},h_{q0}^{e} )\)</span></p>  
+    * 注意栈里面的成员有可能是树，所以每个成员的表示向量是成员那根树枝里面所有EDU的表示向量average pooling之后的结果，队列*q*<sub>0</sub>里面的成员因为一定是单个EDU，所以直接用上面encoder的输出就好.
+
+* 如何训练 - training
+    * 首先要把正确答案的RST树转化成一系列的shift,reduce操作.
+    * 然后既然是分类器,就把输出的action数值softmax一下转化成操作的概率分布*p*<sub>action</sub>,使用交叉熵作为损失函数.
+
+* 如何评价 - evaluation
+    * RST-Pareval metrics
+    一般会把正确答案的RST树转化成向右展开的二叉树，然后算四样东西：
+    trees with no labels (S for Span), labeled with nuclei (N), with relations (R), or both (F for Full), 对这四个评价指标都算micro-averaged F1.  
+
+---
+### 解析句子对
+通常被称为浅层语篇解析(shallow discourse parsing)，因为任务只涉及span对子之间的联系。而不是像RST解析一样，目标是得到语篇的一整颗树.  
+
+有四种不同的子任务：
+1. 区分有连贯作用的关联词与没有连贯作用的词  
+	e.g1. Selling picked up as previous buyers bailed out of their positions **and** aggressive short sellers—anticipating further declines—moved in.  
+	and这个关联词有连贯作用, 它用elaboration的关系连接了两个句子  
+    e.g2. My favorite colors are blue **and** green  
+    and这个词在这只是两个词的连接, 没有连贯作用    
+    以前这个任务是语言学的路子做，今年有了序列分类的做法: 标签是IOB类标签，用CRF+Bi-LSTM    
+2. 找到关联词连接的两个句子(span)  
+还是序列标注模型    
+3. 给任务2中找到的关联词联系起来的两个句子，打关系标签（Coherence Relation Assignment）  
+很难的一个任务，已有的方法是[使用提示词/提示短语(cue phrase)](http://demo.clab.cs.cmu.edu/NLP/S19/files/slides/23-discourse_pragmatics_entity_linking.pdf):  
+先将句子中的提示词找到; 将文本做语篇切分，得到一个个EDU; 对于相邻的两个EDU，对它俩的关系进行分类  
+4. 给任意一对前后句子打关系标签(Implicit Relation Prediction)  
+这个子领域目前的[SOTA](https://arxiv.org/pdf/1710.04334.pdf)怎么做的呢？简单而有效的一个模型:  
+用BERT得到两个span的表示，取<CLS> token对应的timestep的hidden state, 过一层tanh，再过一层softmax，得到sense分类的概率分布.  
 
 ---
 ### 如何追踪语篇当下的核心实体
