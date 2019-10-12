@@ -5,8 +5,10 @@ subtitle: A High-level Introduction to Discourse Coherence
 date: 2019-10-11 10:30:00
 categories: Discourse-coherence NLP
 tags: 语篇连贯 Discourse-coherence NLP 中文文章
-image:
-optimized_image:
+image: >-
+  /assets/img/for_posts/P12/pink_sand.png
+optimized_image: >-
+  /assets/img/for_posts/P12/pink_sand.png
 author: ruxuepeng
 paginate: false
 ---
