@@ -131,13 +131,13 @@ e.g. Before winter I built a **chimney**, and shingled the sides of my **house**
 [图片来自论文](https://www.aclweb.org/anthology/D09-1155.pdf)
 
 ---
-### 总结
+## 总结
 本文作为语篇连贯分析的上篇,介绍了这个领域的基本概念, 研究框架, 数据集和模型. 局部连贯度可以通过研究三条路研究：判断连贯关系,追踪讨论实体,以话题为中心.  
 不同问题的全局连贯度不同,介绍了议论文文体和科研论文文体.  
 下一篇我们将聚焦到语篇的局部连贯度分析,具体看每个研究角度都有什么理论框架和模型.  
 
 ---
-### Reference
+## Reference
 * [Speech and Language Processing](https://web.stanford.edu/~jurafsky/slp3/23.pdf)
 * [Parsing Argumentation Structures in Persuasive Essays](https://arxiv.org/pdf/1604.07370.pdf)
 * [Towards Discipline-Independent Argumentative Zoning: Evidence from Chemistry and Computational Linguistics](https://www.aclweb.org/anthology/D09-1155.pdf)
