@@ -48,9 +48,9 @@ Intro
 
 ---
 
-## 总结 - Summary
+## 总结
 placeholder
 
 ---
-### Reference
-* Paper name - arxiv url
+## Reference
+* [Paper name](url)
