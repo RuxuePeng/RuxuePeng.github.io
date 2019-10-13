@@ -5,8 +5,10 @@ subtitle: Ways to analyze the local coherence of text
 date: 2019-10-12
 categories: NLP
 tags: 语篇连贯 Discourse-coherence NLP 中文文章
-image:
-optimized_image:
+image: >-
+  /assets/img/for_posts/P13/stars.png
+optimized_image: >-
+  /assets/img/for_posts/P13/stars.png
 author: ruxuepeng
 paginate: false
 ---
