@@ -3,7 +3,7 @@ layout: post
 title:  "模板Post Template"
 subtitle: Placeholder
 date:   2019-09-30 23:48:17 -0700
-categories: NLP
+category: tutorial
 tags: 中文文章 Deep-Learning Tensorflow
 image: >-
   /assets/img/for_posts/P0/thumbnail1.JPG

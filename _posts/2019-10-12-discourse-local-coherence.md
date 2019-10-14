@@ -3,7 +3,7 @@ layout: post
 title:  "句子之间的连贯程度如何衡量？"
 subtitle: Ways to analyze the local coherence of text
 date: 2019-10-12
-categories: NLP
+category: coherence
 tags: 语篇连贯 Discourse-coherence NLP 中文文章
 image: >-
   /assets/img/for_posts/P13/stars.png
