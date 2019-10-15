@@ -71,6 +71,23 @@ Focus: 省会
 * 模型  
 现代一般使用有监督训练提问分类器,使用带有答案类型标签的数据集进行训练.  
 可以是依赖特征的分类器,也可以是完全依靠神经网络的分类器.  
+开源github项目:   
+[Keras示例](https://github.com/tim5go/cnn-question-classification-keras/blob/master/main.py)  
+[Torch示例](https://github.com/kearnsw/question-type-classification/blob/master/code/sc/models/sentence_classifier.py)
+
+* 数据集    
+[BQuLD](https://github.com/tim5go/cnn-question-classification-keras/blob/master/data/question_labels.json)  
+1216个问题，及其答案. 问题的繁体中文与英文翻译都有. 包含了答案的类别.  
+[TREC](https://trec.nist.gov/data/qa.html)  
+包含了1999年-2004年的6个数据集, 包含了答案的类别.  
+[Upenn 实验数据](https://cogcomp.seas.upenn.edu/Data/QA/QC/)  
+1000-5500个英文问题, 包含了答案的类别.  
+[Yahoo lab数据集](https://webscope.sandbox.yahoo.com/catalog.php?datatype=l)
+    * L5 - Yahoo! Answers Manner Questions
+    142627个问题及其答案，还有问题的分类  
+    * L6 - Yahoo! Answers Comprehensive Questions and Answers
+    4483032个问题及其答案，还有问题的分类  
+
 
 * 常用的特征  
 提问句子中词语以及词语的词嵌入向量;  
@@ -80,14 +97,20 @@ Focus: 省会
     * What is the state **flower** of California?
     * 哪个**城市**最适合秋天去？  
 
+### 文本检索(Document and Passage Retrieval)  
+将提问中抽取出的信息输入信息检索系统.  
+<img src="/assets/img/for_posts/P14/passage_retrieval.png" alt="文本检索"/>  
+同时把所有备选的文本输入系统，让系统按照相关性对文本排序. 将最相关的N个文本取出. 至此Document Retrieval就做完了.  
+然后将这N个文本切分成段落、句子、甚至语段, 进一步筛选可能的答案(比如利用前面Answer type classification得到的答案类别),
+最后输出备选语段,那么Passage Retrieval就做完了.  
 
+#### 如何得到能计算文本相关性的IR系统  
+#### 如何根据问题的metadata筛选语段
 
-
-
-### 文本检索(Document and Passage Retrieval)
 
 ### 答案抽取(Answer Extraction)
-
+[SQuAD 2.0](https://rajpurkar.github.io/SQuAD-explorer/)  
+基于问题, 从维基百科文章中人工抽取语段作为回答形成的数据集, 2.0中加入了无法被回答的问题.
 
 
 
