@@ -101,14 +101,29 @@ Focus: 省会
 将提问中抽取出的信息输入信息检索系统.  
 <img src="/assets/img/for_posts/P14/passage_retrieval.png" alt="文本检索"/>  
 同时把所有备选的文本输入系统，让系统按照相关性对文本排序. 将最相关的N个文本取出. 至此Document Retrieval就做完了.  
-然后将这N个文本切分成段落、句子、甚至语段, 进一步筛选可能的答案(比如利用前面Answer type classification得到的答案类别),
-最后输出备选语段,那么Passage Retrieval就做完了.  
+然后将这N个文本切分成段落、句子、甚至语段, 进一步筛选可能的答案,
+最后输出备选语段,Passage Retrieval就做完了.  
 
-#### 如何得到能计算文本相关性的IR系统  
-#### 如何根据问题的metadata筛选语段
+#### 如何筛选语段  
+* 对语段做命名实体识别  
+得到每个语段包含的实体以及类别, 结合提问中利用Answer Type Classification抽取的答案类别，对语段进行筛选.  
+* 训练网络对语段与提问的相关度进一步打分  
+特征可以包括: 比如提问的答案应该是一个地名，将语段中地名类实体的个数、  
+提示关键词的个数、所在文本的排名、与提问重合的N-gram个数等等.
+
+比如2018年的[AllenAI的BiDAF模型](https://arxiv.org/pdf/1611.01603.pdf)  
+<img src="/assets/img/for_posts/P14/BIDAF_model.png" alt="文本检索"/>  
+由于我找到了写得很清晰的关于这个模型的[中文笔记](http://www.shuang0420.com/2018/04/01/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0%20-%20Bi-Directional%20Attention%20Flow%20for%20Machine%20Comprehension/)  
+这边就不再展开说了. 一句话, 使用了改良的注意力机制.  
+[官方代码-Tensorflow 1.2版本](https://github.com/allenai/bi-att-flow/tree/dev)
 
 
-### 答案抽取(Answer Extraction)
+### 答案抽取(Answer Extraction)  
+从一堆语段里面找到最能回答提问的语段，作为答案输出.  
+常转化为Span Labeling任务做: 给一个语段, 决定它里面是否包含提问的答案.  
+
+#### 基线模型 - Baseline
+
 [SQuAD 2.0](https://rajpurkar.github.io/SQuAD-explorer/)  
 基于问题, 从维基百科文章中人工抽取语段作为回答形成的数据集, 2.0中加入了无法被回答的问题.
 
