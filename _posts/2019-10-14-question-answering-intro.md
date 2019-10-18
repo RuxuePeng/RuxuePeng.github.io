@@ -177,23 +177,10 @@ e.g. 你知道提问的答案会是一个地点，就用命名实体识别模型
 [NewsQA](https://www.microsoft.com/en-us/research/project/newsqa-dataset/#!download)  
 基于[DeepMind提供的CNN Dailymail数据集](https://cs.nyu.edu/~kcho/DMQA/)中的新闻文章整理出的10万个问题. 跟SQUAD一样，问题和答案都是人设计人抽取的.包含不可回答的问题.  
 
-[WikiQA]  
-不包含语段答案，只包含完整句子作为答案.  
+[WikiQA](https://www.microsoft.com/en-us/download/details.aspx?id=52419)  
+3047个问题.不包含语段答案，只包含完整句子作为答案.  
 
-
-
-
-
-
-
-## 基于知识图谱的问答
-将用户提出的问题看作是对知识库的查询(query).先将问题转化为查询语句,再使用知识库回答问题.  
-
-## 结合信息检索和知识图谱的混合风问答  
-工业界不会单纯使用一种方式,毕竟能抓到耗子的都是好猫.怎么work怎么来.  
-比如IBM的DeepQA系统会给两种方式得到的回答打分,然后选择得分高的回答.  
-
-##如何评价问答系统    
+## 如何评价问答系统    
 
 
 ## Reference  
