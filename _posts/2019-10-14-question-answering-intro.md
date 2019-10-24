@@ -1,26 +1,25 @@
 ---
 layout: post
-title:  "9012年了,你还没学过问答和阅读理解?"
-subtitle: Intro to Reading Comprehension and Information-Retrieval-based Question Answering  
+title:  "9012年了,你还没做过问答和阅读理解?"
+subtitle: Intro to Reading Comprehension and Text-based Question Answering  
 date:   2019-10-14
 category: QA
 tags: 问答 Question-answering NLP 中文文章
 image: >-
-  /assets/img/for_posts/P14/thumbnail.png
+  /assets/img/for_posts/P14/hope_valley.png
 optimized_image: >-
-  /assets/img/for_posts/P14/thumbnail.png
+  /assets/img/for_posts/P14/hope_valley.png
 author: ruxuepeng
 paginate: true
 ---   
 目前对于问答的研究,主要在研究用事实就能回答的、答案简短的问题(**factoid question**).  
 比如中国的货币是什么？人民币.    
-比如Musée de l'Orangerie在法国的哪里？巴黎.  
-比如哈利·波特的母亲叫什么名字？莉莉·伊万丝·波特.  
+比如Musée de l'Orangerie在法国的哪里？巴黎.   
 比如Jean Fragonard是什么风格的画家? 洛可可.    
 
 本文也是聚焦在这种类型的问答上面.
 
-三种套路教电脑回答问题:
+目前三种<del>套路</del>思路教电脑回答问题:
 * 信息检索+阅读理解(Text-based/**TBQA**)
 * 利用知识图谱(Knowledge-based/**KBQA**)
 * 混合工业风(Hybrid)
@@ -30,9 +29,9 @@ paginate: true
 ---
 ## 基于信息检索的问答系统
 (IR-based Question Answering)  
-目的是在网上或者已有的一堆文本里<ins>找到一小段话(span)来回答用户的问题 </ins>.  
+需要一堆文本里<ins>找到一小段话、几个词(span)来回答用户的问题 </ins>.  
 基本框架如下:  
-先从用户提出的问题出发(Question Processing), 首先使用信息检索系统找到相关的文本(Document and Passage Retrieval),然后使用深度学习的阅读理解模型从文本中截取(Answer Extraction)能回答问题的文段(span of text).  
+从用户提出的问题出发(Question Processing), 使用信息检索系统找到相关的文本和段落(Document and Passage Retrieval),然后使用深度学习的阅读理解模型从一堆段落中截取(Answer Extraction)能回答问题的文段(span of text).  
 <img src="/assets/img/for_posts/P14/IR_based_qa.png" alt="信息检索"/>
 
 接下来将分为3个步骤逐个解说    
@@ -167,9 +166,9 @@ e.g. 你知道提问的答案会是一个地点,就用命名实体识别模型�
 
 本部分包括:
 * [数据集](#数据集)
-* [双向LSTM为核心的模型](#双向LSTM为核心的模型)
+* [双向LSTM为核心的模型——DrQA为例](#双向LSTM为核心的模型)
 * [BERT为核心的模型](#BERT为核心的模型)  
-* [做多步推理的图网络模型](做多步推理的图网络模型)
+* [做多步推理的图网络模型——动态融合图网络为例](#做多步推理的图网络模型)
 
 ### 数据集  
 [HotpotQA 火锅问答数据集](https://hotpotqa.github.io/)  
@@ -258,7 +257,7 @@ e.g. 你知道提问的答案会是一个地点,就用命名实体识别模型�
 [pyTorch代码](https://github.com/woshiyyya/DFGN-pytorch)  
 模型由5个部分组成:  
 负责筛选段落的分类器(淡紫色),负责提取实体并构建图的模块(橘色),负责把问答转化为表示向量的编码器(黄色), 负责多步推理的混合模块(蓝色),负责预测支撑证据和答案的起始位置的分类器(绿色).  
-<img src="/assets/img/for_posts/P14/DFGN.png" alt="DFGN_model"/>
+<img src="/assets/img/for_posts/P14/DFGN_overview.png" alt="DFGN_model"/>
 
 
 **筛选段落的分类器**  
@@ -276,18 +275,18 @@ e.g. 你知道提问的答案会是一个地点,就用命名实体识别模型�
 假设 **Q** 有L个词,**C** 有M个词,得到提问的表示向量(L x d2)和背景知识的表示向量(M x d2).  
 
 **多步推理**  
-聚焦到右边那张图  
+<img src="/assets/img/for_posts/P14/DFGN_hopper.png" alt="DFGN_model"/>  
 1. Doc2Graph   
 先用**C**中的所有词找到对应的实体**E**  
 怎么找到？使用矩阵M      
 
 2. 图上搜索  
-用注意力网络和经过MeanPool的提问向量计算soft mask
+用注意力网络和经过MeanPool的提问向量计算soft mask  
 用soft mask来代表实体与提问Q之间的相关度, 选出起始的实体节点  
 使用类似GAT的模型计算两节点间的注意力分数alpha, 出发节点的向量会被更新为邻节点信息的加权平均  
-每一次推理新访问到的节点会成为下一次推理的起始节点,通过这样的设计把信息一步步扩散到邻近节点去    
+每一次推理新访问到的节点会成为下一次推理的起始节点,通过这样的设计把信息一步步扩散到邻近节点去  
 同时使用bi-attention网络更新提问的表示向量  
-Q<sup>(t)</sup> = Bi-Attention(Q<sup>(t−1)</sup>, E<sup>(t)</sup>)
+Q<sup>(t)</sup> = Bi-Attention(Q<sup>(t−1)</sup>, E<sup>(t)</sup>)  
 
 3. Graph2Doc  
 将相关实体**E**用M对应回**C**中的词  
@@ -299,7 +298,9 @@ Q<sup>(t)</sup> = Bi-Attention(Q<sup>(t−1)</sup>, E<sup>(t)</sup>)
 2. 答案开始词的位置
 3. 答案结束词的位置
 4. 答案的类型  
-损失函数是四个分类器自己的交叉熵的加权平均 L = L<sub>start</sub> + L<sub>end</sub> + λ<sub>s</sub>L<sub>support</sub> + λ<sub>t</sub>L<sub>type</sub>  
+
+损失函数是四个分类器自己的交叉熵的加权平均:  
+L = L<sub>start</sub> + L<sub>end</sub> + λ<sub>s</sub>L<sub>support</sub> + λ<sub>t</sub>L<sub>type</sub>  
 
 ---
 ## 总结  
