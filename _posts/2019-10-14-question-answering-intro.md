@@ -4,7 +4,7 @@ title:  "9012年了,你还没做过问答和阅读理解?"
 subtitle: Intro to Reading Comprehension and Text-based Question Answering  
 date:   2019-10-14
 category: QA
-tags: 问答 Question-answering NLP 中文文章
+tags: 问答 Question-Answering 阅读理解 Reading-Comprehension 图网络 GNN NLP 中文文章
 image: >-
   /assets/img/for_posts/P14/hope_valley.png
 optimized_image: >-
