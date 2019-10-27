@@ -69,8 +69,8 @@ paginate: true
     如果提问文本中的谓语词组能与列表中的词组对应，那么就对应上了Freebase的关系.  
 
     * 或者把提问按写好的模板转化为查询语句  
-    | - Question Type - | ------- Pattern ------- | Query |  
-    | Question (1-Arg.) | how big is **e** population | (?, **e**)  |
+    | - Question Type - | --------- Pattern -------- | ---- Query ---- |  
+    | Question (1-Arg.) | how big is **e** population | population(?, **e**)  |
 
 
 3. 同义提问聚类  
@@ -99,3 +99,9 @@ winnie-the-pooh)`来回答
     |  Flora      | birth-month |    12    |  
 
 [^2]: 回忆到Entity Linking任务，就是把一段字符对应到一个维基百科的页面.  
+
+---
+### Reference  
+* [Speech and Language Processing - Question Answering](https://web.stanford.edu/~jurafsky/slp3/25.pdf)
+* [Paraphrase-Driven Learning for Open Question Answering](https://www.aclweb.org/anthology/P13-1158.pdf)  
+* [Open IE - AllenAI](https://openie.allenai.org/)
