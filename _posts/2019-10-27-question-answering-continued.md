@@ -93,7 +93,7 @@ winnie-the-pooh)`来回答
 
 另外一种结合TBQA和KBQA的方式——把外部知识也做成表示向量  
 具体可以看KABLSTM模型  [代码](https://github.com/dengyang17/kablstm)  
-<img src="/assets/img/for_posts/P15/kablstm.png" alt="model"/>
+<img src="/assets/img/for_posts/P15/KABLSTM.png" alt="model"/>
 
 ---  
 ## <a name="evaluation">如何评价问答系统</a>   
