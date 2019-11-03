@@ -4,7 +4,7 @@ title:  "电脑也能写出连贯的文章吗?"
 subtitle: A High-level Introduction to Discourse Coherence
 date: 2019-10-11 10:30:00
 category: coherence
-tags: 语篇连贯 Discourse-coherence NLP 中文文章
+tags: 语篇连贯 Discourse-coherence Model-Evaluation NLP 中文文章
 image: >-
   /assets/img/for_posts/P12/pink_sand.png
 optimized_image: >-
