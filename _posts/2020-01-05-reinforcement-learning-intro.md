@@ -19,7 +19,7 @@ paginate: true
 ## 本文要点
 
 * 强化学习系统101    
-* Evolutionary Method vs RL Method   
+* 强化学习系统的几种分类角度     
 * 什么是Model-free System   
 
 ---
@@ -33,6 +33,7 @@ paginate: true
 * Value - （某行动的）价值，也就是（基于某行动）能得到奖励的概率
 * Value Function - 预测每个行动的价值的方程
 * Policy - （某状态下）应该选择哪种行动的行为准则
+* Policy Function - 给出每种备选行动被选中的概率
 * Evolutionary Method  
 * Reinforcement Learning Method  
 * Self-play  
@@ -52,8 +53,7 @@ paginate: true
 与有监督学习(Supervised Learning)最大的不同是，强化学习的系统没有一个明确的“老师”(Supervisor)。它是通过不断尝试不断翻车的过程进步，也就是**Trial-and-error Search** .  
 跟人一样，你现在做的选择可能不会对你的生活有立刻的影响，但是在未来的某一天，你发现这个决定其实改变了你人生的方向。这就是RL的第二个特点，奖励可能延迟发生(**Delayed Reward**) .  
 
----
-### 1. 智能体(Agent）   
+### 智能体(Agent）   
 是强化学习系统的一个部分。一般满足这些要求:  
 * 能感受到环境目前的状态(State)
 * 能作出影响环境状态的行动(Action)  
@@ -65,12 +65,38 @@ paginate: true
 又比如，记得你生日但是没有给你过生日的男朋友是智能体吗?  
 不是，因为他不能做出行动，或者他的目标跟环境这个状态不相关.  
 
-咳咳言归正传...
-
-
+咳咳...
 
 ---
-### 2. thing2  
+## 强化学习系统的几种分类角度  
+### 1. 下一步的选择如何决定 —— Policy vs Value  
+强化学习系统可以分为基于策略的(Policy-based)和基于价值的(Value-based).  
+
+比如说，Flora去超市买东西，结账可以选择去人工柜台或者自助柜台.  
+Policy-based的设定可能是  
+去人工柜台的概率 40%  
+去自助柜台的概率 60%
+
+而Value-based的设定可能是  
+去人工柜台的价值是 1  
+去自助柜台的价值是 2  
+
+然后通过学习，在不同状态下这里的数字会被更新.   
+如果环境需要智能体采取连续好几个行动，基于策略的系统就能把行动的概率累乘计算,而基于价值的系统就不能自然地计算价值了.  
+
+Policy Gradients算法属于基于策略的.  
+Q-learning算法、Sarsa算法都是基于价值的.  
+**Actor-Critic算法**, Actor按概率选择行动，是基于策略的; Critic对行动进行打分，是基于价值的，所以属于混合算法.  
+
+### 2. 系统更新方式 —— 回合 vs 单步  
+Monte-Carlo **回合更新** <del>aka从谈恋爱开始到分手，最后总结所有历史行为，只更新一次策略</del>  
+Temporal Difference **单步更新** <del>aka一边谈恋爱一边总结经验</del>.  
+
+明显逻辑上来说，单步更新更好 <del>分了手才总结还有什么用</del>  
+
+### 3. 历史经验的来源 —— On-Policy vs Off-Policy  
+On-Policy
+
 
 ---
 ## 要点2
@@ -83,3 +109,4 @@ placeholder
 ---
 ## Reference
 * [Reinforcement Learning: An Introduction - 2nd Edition](https://web.stanford.edu/class/psych209/Readings/SuttonBartoIPRLBook2ndEd.pdf)
+* [Soft Actor-Critic](https://arxiv.org/pdf/1801.01290.pdf)
