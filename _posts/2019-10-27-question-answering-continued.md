@@ -6,9 +6,9 @@ date:   2019-10-27
 category: QA
 tags: 问答 Question-Answering Open-Information-Extraction Model-Evaluation Knowledge-Graph 阅读理解 Reading-Comprehension NLP 中文文章
 image: >-
-  /assets/img/for_posts/P16/ChristmasBreak2019.JPG
+  /assets/img/for_posts/P15/somewhere_near_hope_valley.JPG
 optimized_image: >-
-  /assets/img/for_posts/P16/ChristmasBreak2019.JPG
+  /assets/img/for_posts/P15/somewhere_near_hope_valley.JPG
 author: ruxuepeng
 paginate: true
 ---  
