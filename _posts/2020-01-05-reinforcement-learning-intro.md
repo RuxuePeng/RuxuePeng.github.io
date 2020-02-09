@@ -4,7 +4,7 @@ title:  "强化学习101"
 subtitle: Reinforcement Learning 101  
 date:   2020-01-05 10:42:00
 category: RL
-tags: Reinforcement-Learning 强化学习 中文文章
+tags: Reinforcement-Learning 强化学习 中文文章 Deep-Learning
 image: >-
   /assets/img/for_posts/P16/ChristmasBreak2019.JPG
 optimized_image: >-
