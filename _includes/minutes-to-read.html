@@ -3,7 +3,7 @@
 {% if words < 200 %}
   {% assign totalMinutes = 1 %}
 {% else %}
-  {% assign totalMinutes = words | divided_by:200 %}
+  {% assign totalMinutes = words | divided_by:100 %}
 {% endif %}
 
 {% assign minutesText = totalMinutes | append: ' min to read' %}

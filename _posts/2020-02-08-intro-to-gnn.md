@@ -4,7 +4,7 @@ title:  "图神经网络是什么?"
 subtitle: A High-level Introduction to Graph Neural Network
 date: 2020-02-08 16:56:00
 category: Graph
-tags: 图神经网络 GNN 中文文章
+tags: 图神经网络 Graph-Neural-Network GNN 中文文章
 image: >-
   /assets/img/for_posts/P17/mural_SJ_downtown.jpg
 optimized_image: >-
