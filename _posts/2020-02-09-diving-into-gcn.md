@@ -141,6 +141,10 @@ c. 用SGD优化器优化目标函数:
 [SDNE](https://zhuanlan.zhihu.com/p/56637181)  
 [SDNE应用于阿里凑单推荐系统](https://mp.weixin.qq.com/s?__biz=MzIzOTU0NTQ0MA==&mid=2247486868&idx=1&sn=c2d3e38e9ab7cc61f2a2ffaeecf0febe&chksm=e929309bde5eb98dfa657c7fd1bf7e80495f9c9ad0cde2ee78b36a1f0a453d2cc322948cb3a3&mpshare=1&scene=1&srcid=0213HJqpvPzBLS7AW7L6K3Zz#rd)  
 
+KDD现场油管视频传送门:  
+[SDNE](https://www.youtube.com/watch?v=SHLWSQkvnL4)  
+[Node2vec](https://www.youtube.com/watch?v=1_QH5BEP5BM)  
+
 代码:  
 [node2vec in python](https://github.com/aditya-grover/node2vec)  
 [node2vec in scala code](https://github.com/aditya-grover/node2vec/tree/master/node2vec_spark)  
