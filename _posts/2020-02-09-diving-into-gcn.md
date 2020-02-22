@@ -1,24 +1,24 @@
 ---
 layout: post
-title:  "图卷积网络介绍与实战"
+title:  "图卷积网络是什么鬼"
 subtitle: Diving into Graph Convolutional Network
 date: 2020-02-09 11:24:00
 category: Graph
-tags: 图卷积网络 Graph-Convolutional-Network 图神经网络 Graph-Neural-Network Graph-based Algorithm 中文文章
+tags: 图卷积网络 Graph-Convolutional-Network 图神经网络 Graph-Neural-Network Graph-based-algorithm 中文文章
 image: >-
-  /assets/img/for_posts/P15/somewhere_near_hope_valley.JPG
+  /assets/img/for_posts/P18/17mile.JPG
 optimized_image: >-
-  /assets/img/for_posts/P15/somewhere_near_hope_valley.JPG
+  /assets/img/for_posts/P18/17mile.JPG
 author: ruxuepeng
 paginate: false
 ---
-上篇我们介绍了什么是图神经网络,今天我们来看看最广为人知的图神经网络结构——GCN.  
+今天我们来看看最广为人知的图神经网络结构——GCN.  
 P.S. 本文假设读者对CNN有了解,这边就不赘述啦.  
 
 ## 本文要点
-1. 图卷积网络是什么
-2. 图上表示学习(Representation Learning on Graph)  
-3. GCN的适用场景（哪些人需要懂GCN?）
+1. [图卷积网络是什么](#图卷积网络是什么)
+2. [图的表示学习](#图的表示学习)
+3. [图卷积网络的适用场景](#图卷积网络的适用场景)
 
 ---
 ## 图卷积网络是什么  
@@ -70,13 +70,13 @@ P.S. 本文假设读者对CNN有了解,这边就不赘述啦.
 选择2: A -> D<sup>-1/2</sup> A D<sup>-1/2</sup> 对称的标准化, Kipf在ICLR 2017用的这个.  
 
 ---
-## 图上表示学习  
+## 图的表示学习  
 1. [定义任务](#定义任务)
 2. [介绍几类节点表示模型](#介绍几类节点表示模型)
-3. [现有的表示模型们](#现有的表示模型们)  
+3. [现有的图表示模型们](#现有的图表示模型们)  
 
 ### 定义任务
-自动生成任何图的表示向量      
+Representation Learning on Graph研究的是如何自动生成任何图的表示向量      
 <img src="/assets/img/for_posts/P18/represent-graph-in-vector.png" alt="demo"/>  
 
 如何将每个节点的信息映射到一个低维空间里面, 并且确保:  
@@ -107,10 +107,12 @@ c. 用SGD优化器优化目标函数:
 <p><span class="math display">\[\mathcal{L}= \sum_{u\in V} \sum_{v\in N_R(u)} -log(P(v|Z_u)) \]</span></p>  
 这个目标函数意思是, 对每个节点u路过的每个邻近节点v,模型预测他们同时出现的概率越大, 模型损失越小.  
 <p><span class="math display">\[ \mathcal{L} = \sum_{u\in V} \sum_{v\in N_R(u)} -log \frac{exp(z_u^T z_v)}{\sum_{n \in V}exp(z_u^T z_n)} \]</span></p>  
+
 * 上面这个P直接算的话 复杂度为V<sup>2</sup>, 所以实际上分母不会是w.r.t全部node,是会用Negative sampling选固定数量node做标准化.  
 
+<img src="/assets/img/for_posts/P18/node2vec.png" alt="node2vec"/>  
 
-<img src="/assets/img/for_posts/P18/node2vec.png" alt="node2vec"/>
+
 * 不同模型的随机游走规则不同, node2vec是设置了biased walk的(为了在BFS和DFS之间平衡).  
     p代表回头(缩短与起始节点的距离),q代表往前(加大与起始节点的距离).
 
@@ -122,7 +124,7 @@ c. 用SGD优化器优化目标函数:
 * 在网络中随机游走,它们在同一次游走中都被经过的概率很大  
 
 ### 如何将图的一部分表示为一个向量(Graph Embedding)  
-可以把大图里面的子图用一个dummy node表示,然后按照正常节点表示模型去做.  
+可以把大图里面的子图(subgraph)用一个dummy node表示,然后按照正常节点表示模型去做.  
 (详细可以看[Gated Graph Sequence Neural Network - ICLR 2016](https://arxiv.org/pdf/1511.05493.pdf))   
 或者参考[Anonymous Walk Embeddings - ICML 2018](https://arxiv.org/pdf/1805.11921.pdf)
 
@@ -165,6 +167,7 @@ KDD现场油管视频传送门:
 比如利用知识图谱,预测实体之间是否会产生链接（Link Prediction）.   
 比如Fraud detection里面,每个节点是一个商家,每一条线是商家之间的交易.你希望加入商家之间的交易信息作为特征,预测商家是否在洗钱.  
 比如推荐朋友时,每个节点是一个用户, 你希望根据用户John已有朋友圈,预测某个用户Alex是否可能是用户John的朋友.  
+应用的时候可以思考, 你是需要在node level, link level, 还是graph level建模.   
 
 
 ---
